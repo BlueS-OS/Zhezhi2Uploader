@@ -13,7 +13,7 @@ La metáfora es la de Zhezhi: nadie debería repintar un cuadro ajeno. La plataf
 tira del trazo para recomprimir y bajar la resolución; este taller reescribe el
 contenedor con la misma estructura que el archivo de referencia y le pone su sello.
 
-**En línea:** <https://blues-os.github.io/BlueZhezhi2/> ·
+**En línea:** <https://blues-os.github.io/Zhezhi2Uploader/> ·
 **En local:** `.\start.cmd` (sin conexión y sin backend).
 
 ![Tarjeta de Zhezhi 2.0: papel de jade, tinta y sello bermellón](docs/preview.png)
