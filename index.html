@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zhezhi 2.0 · taller de tinta</title>
+    <meta
+      name="description"
+      content="Zhezhi 2.0 reescribe el contenedor de tu MP4 antes de subirlo: sin recodificar y sin que el vídeo salga de tu equipo."
+    />
+    <meta name="theme-color" content="#f7f2e8" />
+    <meta property="og:title" content="Zhezhi 2.0 · taller de tinta" />
+    <meta
+      property="og:description"
+      content="Que nadie repinte tu trazo. Sellador de contenedor MP4, local y sin backend."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://blues-os.github.io/BlueZhezhi2/docs/preview.png" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="./assets/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png" />
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./">
+        <span class="brand-mark" aria-hidden="true">折</span>
+        <span class="brand-text">
+          <strong>Zhezhi</strong>
+          <em>taller de tinta · 2.0</em>
+        </span>
+      </a>
+      <nav class="topbar-side" aria-label="Otras pieles del taller">
+        <a class="switch" href="https://blues-os.github.io/ZhezhiUploader/">折 Zhezhi</a>
+        <a class="switch" href="https://blues-os.github.io/ZhezhiUploader/phrolova/">洛 Phrolova</a>
+        <a class="switch" href="https://blues-os.github.io/BlueChisa/">千 Chisa</a>
+        <span class="badge">local · sin servidor</span>
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <p class="eyebrow">pincel · papel · firma</p>
+        <h1>Que nadie<br />repinte tu trazo.</h1>
+        <p class="lede">
+          Zhezhi 2.0 reescribe el contenedor de tu vídeo con la misma estructura que
+          la herramienta original, para que la plataforma lo publique tal como lo
+          pintaste: sin bajar la resolución. Todo ocurre en tu navegador.
+        </p>
+
+        <figure class="quote">
+          <blockquote>
+            «La luz que te da ahora mismo es tan bonita… ¿puedo pintarte?»
+          </blockquote>
+          <figcaption>— Zhezhi, pintora por encargo</figcaption>
+        </figure>
+
+        <ul class="facts">
+          <li><strong>Sin recomprimir</strong> si ya es H.264/HEVC</li>
+          <li><strong>mvhd</strong> con duración desconocida</li>
+          <li><strong>Firma</strong> del taller en el contenedor</li>
+          <li><strong>Nada sale</strong> de tu equipo</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="steps" aria-hidden="true">
+          <span class="step is-active"><b>1</b> Boceto</span>
+          <span class="step"><b>2</b> Tinta</span>
+          <span class="step"><b>3</b> Sello</span>
+        </div>
+
+        <div id="drop" class="drop" tabindex="0" role="button" aria-label="Elegir vídeo">
+          <input id="file" type="file" accept="video/*,.mp4,.mov,.mkv,.webm,.m4v" hidden />
+          <svg class="brush" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M33 11c12 0 21 9 21 21s-9 21-21 21S12 44 12 32c0-8 4-14 10-18" />
+            <circle cx="32" cy="32" r="3.2" class="brush-dot" />
+          </svg>
+          <p class="drop-title">Deja el vídeo sobre la mesa</p>
+          <p class="drop-sub">o haz clic para buscarlo · MP4, MOV, MKV, WebM…</p>
+        </div>
+
+        <div id="fileInfo" class="file-info" hidden>
+          <dl>
+            <div><dt>Archivo</dt><dd id="fName">—</dd></div>
+            <div><dt>Tamaño</dt><dd id="fSize">—</dd></div>
+            <div><dt>Duración</dt><dd id="fDur">—</dd></div>
+            <div><dt>Contenedor</dt><dd id="fKind">—</dd></div>
+          </dl>
+          <button id="clear" class="ghost-btn" type="button">Retirar</button>
+        </div>
+
+        <div class="options">
+          <label class="field">
+            <span>Firma del taller</span>
+            <input
+              id="tagName"
+              type="text"
+              value="BlueZhezhi-v2.0"
+              maxlength="31"
+              spellcheck="false"
+              autocomplete="off"
+            />
+          </label>
+
+          <label class="check">
+            <input id="sign" type="checkbox" checked />
+            <span>Firmar la salida con el nombre del taller</span>
+          </label>
+
+          <label class="check">
+            <input id="unknown" type="checkbox" checked />
+            <span>Marcar la duración como desconocida (mvhd)</span>
+          </label>
+        </div>
+
+        <p id="signNote" class="note faint" hidden>
+          La firma se escribe en <code>udta/meta/ilst</code> (©ART, ©nam, ©too,
+          ©enc, ©wrt, ©cmt, cprt), en el handler de pista y en el
+          <code>compressor name</code> del <code>stsd</code>. Es lo que verás en
+          MediaInfo como aplicación de escritura.
+        </p>
+        <p id="unknownNote" class="note warn">
+          <code>mvhd</code> pasa a versión 1 con
+          <code>duration = 0xFFFF…FF</code>. Es la estructura del archivo de
+          referencia: legal según ISO-BMFF, pero algunos reproductores no muestran
+          la duración ni dejan hacer seek. Si el archivo tiene que ser totalmente
+          estándar, desmárcalo.
+        </p>
+
+        <button id="run" class="primary" type="button" disabled>
+          Sellar el vídeo
+        </button>
+
+        <div id="error" class="error" hidden></div>
+      </section>
+
+      <section id="progress" class="card progress" hidden aria-live="polite">
+        <div class="progress-head">
+          <span id="stage">Leyendo el archivo</span>
+          <span id="pct">0%</span>
+        </div>
+        <div class="bar"><div id="barFill" class="bar-fill"></div></div>
+        <ol id="stages" class="stage-list"></ol>
+      </section>
+
+      <section id="result" class="card result" hidden aria-live="polite">
+        <div class="result-head">
+          <div class="result-copy">
+            <p class="eyebrow">sellado</p>
+            <h2 id="rTitle">Vídeo sellado</h2>
+            <p id="rMeta" class="muted"></p>
+          </div>
+          <div class="result-side">
+            <span class="seal" aria-hidden="true">折</span>
+            <a id="download" class="primary" download>Descargar MP4</a>
+          </div>
+        </div>
+
+        <dl class="report" id="report"></dl>
+
+        <details class="details">
+          <summary>Qué se ha trazado</summary>
+          <ul id="changes"></ul>
+        </details>
+      </section>
+
+      <section class="card caveat">
+        <h2>Antes de sellar</h2>
+        <p>
+          Zhezhi 2.0 no «mejora» el vídeo: le cambia la firma y declara la duración
+          como desconocida, igual que el archivo de referencia. No toca resolución,
+          fps ni bitrate, y no recodifica si el códec ya es H.264/HEVC.
+        </p>
+        <p class="note warn" style="margin-top: 14px">
+          Es una manipulación deliberada de los metadatos para que la plataforma no
+          trate el archivo como un export estándar. Puede funcionar, puede quedarse
+          en «procesando» o puede rechazarse. Sin garantía.
+        </p>
+      </section>
+
+      <section class="atelier">
+        <div class="atelier-head">
+          <p class="eyebrow">la pintora</p>
+          <h2>Zhezhi</h2>
+          <p class="atelier-lede">
+            Pintora por encargo de Jinzhou. Cobra por lo que pinta y prefiere los
+            encargos tranquilos: un retrato, un paisaje, una pared que ya nadie
+            mira. De ahí viene el nombre de este taller.
+          </p>
+        </div>
+
+        <div class="atelier-grid">
+          <article class="atelier-card">
+            <span class="atelier-index">01</span>
+            <h3>Pincel</h3>
+            <p>
+              Más alto que ella. Traza la línea de un solo gesto y no vuelve atrás:
+              lo que queda pintado, queda.
+            </p>
+          </article>
+          <article class="atelier-card">
+            <span class="atelier-index">02</span>
+            <h3>Papel de jade</h3>
+            <p>
+              Blanco verdoso, con la fibra a la vista. La paleta de esta página sale
+              de ahí: tinta, malaquita, azurita y un bermellón para el sello.
+            </p>
+          </article>
+          <article class="atelier-card">
+            <span class="atelier-index">03</span>
+            <h3>Sello 折</h3>
+            <p>
+              La marca que firma cada pieza. Aquí se escribe dentro del MP4, en
+              <code>©too</code>, el handler y el compressor name.
+            </p>
+          </article>
+        </div>
+
+        <p class="atelier-note">
+          Homenaje no oficial. Zhezhi y <em>Wuthering Waves</em> pertenecen a Kuro
+          Games. Esta página no está afiliada al juego ni a TikTok.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="footer-mark"><span>折</span> Zhezhi · taller de tinta</p>
+      <p class="muted">
+        Herramienta local, sin backend ·
+        <a href="https://github.com/BlueS-OS/BlueZhezhi2">código en GitHub</a>
+      </p>
+      <p class="muted footer-links">
+        Otras pieles del taller:
+        <a href="https://blues-os.github.io/ZhezhiUploader/">Zhezhi</a> ·
+        <a href="https://blues-os.github.io/ZhezhiUploader/phrolova/">Phrolova</a> ·
+        <a href="https://blues-os.github.io/BlueChisa/">Chisa</a> ·
+        <a href="https://blues-os.github.io/ChisaUploader/">hilo de subida</a>
+      </p>
+    </footer>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>

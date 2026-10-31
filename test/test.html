@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Zhezhi 2.0 · prueba del motor</title>
+    <style>
+      :root { color-scheme: light; }
+      body { margin: 0; padding: 32px; background: #f7f2e8; color: #23262b;
+             font: 15px/1.55 "Segoe UI", system-ui, sans-serif; }
+      h1 { font: 600 22px/1.2 "Iowan Old Style", Palatino, Georgia, serif; }
+      h2 { font: 600 16px/1.2 "Iowan Old Style", Palatino, Georgia, serif; margin-top: 28px; }
+      .ok { color: #1f8a7d; font-weight: 600; }
+      .bad { color: #c8402c; font-weight: 600; }
+      table { border-collapse: collapse; width: 100%; max-width: 900px; margin-top: 8px; }
+      td, th { text-align: left; padding: 6px 10px; border-bottom: 1px solid rgba(35,38,43,.14); }
+      th { font: 600 10px/1 "Cascadia Mono", Consolas, monospace; letter-spacing: .14em;
+           text-transform: uppercase; color: #8d8a80; }
+      code, pre { font-family: "Cascadia Mono", Consolas, monospace; font-size: 12px; }
+      pre { background: #fffdf8; border: 1px solid rgba(35,38,43,.14); padding: 12px; overflow: auto; }
+      li { margin: 4px 0; }
+    </style>
+  </head>
+  <body>
+    <h1>Prueba del motor · Zhezhi 2.0</h1>
+    <p>
+      Genera un MP4 sintético en memoria (sin vídeo real), lo sella con
+      <code>patchMp4()</code> y comprueba el resultado con <code>verifyMp4()</code>.
+    </p>
+    <div id="out">Ejecutando…</div>
+    <script type="module" src="./run.js"></script>
+  </body>
+</html>
